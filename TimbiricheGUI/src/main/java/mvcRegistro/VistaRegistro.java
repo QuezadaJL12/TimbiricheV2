@@ -3,9 +3,11 @@ package mvcRegistro;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.Objects;
 
 public class VistaRegistro extends JFrame {
+
     private JTextField txtNombre;
     private JButton btnRegistrarse;
     private JLabel lblAvatarSeleccionado;
@@ -30,44 +32,55 @@ public class VistaRegistro extends JFrame {
         panelCentro.add(txtNombre);
         add(panelCentro, BorderLayout.CENTER);
 
+        // Crear y organizar panel de avatares + botón
         panelAvatares = new JPanel(new GridLayout(3, 3, 10, 10));
-        add(panelAvatares, BorderLayout.SOUTH);
         panelAvatares.setPreferredSize(new Dimension(300, 200));
 
         btnRegistrarse = new JButton("Registrarse");
-        add(btnRegistrarse, BorderLayout.PAGE_END);
+
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        panelInferior.add(panelAvatares, BorderLayout.CENTER);
+        panelInferior.add(btnRegistrarse, BorderLayout.SOUTH);
+        add(panelInferior, BorderLayout.SOUTH);
 
         lblAvatarSeleccionado = new JLabel("", SwingConstants.CENTER);
         add(lblAvatarSeleccionado, BorderLayout.WEST);
+
         cargarAvatares();
-        panelAvatares.revalidate();
-        panelAvatares.repaint();
-        this.validate();
-        this.repaint();
+
     }
 
     private void cargarAvatares() {
         String[] nombresAvatares = {"GATO.png", "LEIA.png", "LOBO.png", "PINGUINO.png", "RANA.png", "ROBOCOB.png", "SOLDADO.png"};
-    for (String nombre : nombresAvatares) {
-        String ruta = "Avatares/" + nombre;
-        java.net.URL url = getClass().getClassLoader().getResource(ruta);
-        System.out.println("Cargando imagen: " + ruta + " -> " + url);
-        if (url == null) {
-            System.err.println("No se encontró la imagen: " + ruta);
-            continue;
-        }
-        ImageIcon icon = new ImageIcon(url);
-        ImageIcon escalado = new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-        JButton btnAvatar = new JButton(escalado);
-        btnAvatar.setActionCommand(nombre);
-        btnAvatar.addActionListener(e -> seleccionarAvatar(nombre));
-        panelAvatares.add(btnAvatar);
+        for (String nombre : nombresAvatares) {
+            String ruta = "Avatares/" + nombre;
+            java.net.URL url = getClass().getClassLoader().getResource(ruta);
+            System.out.println("Cargando imagen: " + ruta + " -> " + url);
+            if (url == null) {
+                System.err.println("No se encontró la imagen: " + ruta);
+                continue;
+            }
+            ImageIcon icon = new ImageIcon(url);
+            ImageIcon escalado = new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+            JButton btnAvatar = new JButton(escalado);
+            btnAvatar.setActionCommand(nombre);
+            btnAvatar.addActionListener(e -> seleccionarAvatar(nombre));
+            panelAvatares.add(btnAvatar);
         }
     }
 
     private void seleccionarAvatar(String nombreArchivo) {
-        this.rutaAvatarSeleccionado = "Avatares/" + nombreArchivo;
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(rutaAvatarSeleccionado)));
+        // Solo guarda el nombre del archivo, sin la ruta
+        this.rutaAvatarSeleccionado = nombreArchivo;
+
+        String ruta = "Avatares/" + nombreArchivo;
+        URL url = getClass().getClassLoader().getResource(ruta);
+        if (url == null) {
+            System.err.println("No se encontró el avatar: " + ruta);
+            return;
+        }
+
+        ImageIcon icon = new ImageIcon(url);
         lblAvatarSeleccionado.setIcon(new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH)));
     }
 

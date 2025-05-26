@@ -17,9 +17,9 @@ public class ControladorTamanoTablero {
     private final Jugador jugador;
     private final Blackboard blackboard;
 
-    public ControladorTamanoTablero(VistaTamanoTablero vista, ModeloTamanoTablero modelo, Jugador jugador, Blackboard blackboard) {
-        this.vista = vista;
-        this.modelo = modelo;
+    public ControladorTamanoTablero(Jugador jugador, Blackboard blackboard) {
+        this.vista = new VistaTamanoTablero();
+        this.modelo = new ModeloTamanoTablero();
         this.jugador = jugador;
         this.blackboard = blackboard;
 
@@ -33,6 +33,7 @@ public class ControladorTamanoTablero {
 
         vista.getBtnServidor().addActionListener(e -> crearServidor());
         vista.getBtnUnirse().addActionListener(e -> unirseAServidor());
+        vista.setVisible(true);
     }
 
     private void seleccionarTamano(int tamano) {

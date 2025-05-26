@@ -26,6 +26,6 @@ public class Prueba {
         cliente.start();
         // Iniciar flujo de registro
         new ControlRegistro(vista, modelo, blackboard, cliente);
-        vista.setVisible(true);
+        
     }
 }

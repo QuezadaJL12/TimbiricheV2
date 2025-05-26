@@ -3,6 +3,7 @@
 import blackboard.evento.EventoRegistro;
 import com.mycompany.blackboard.Blackboard;
 import modelo.Jugador;
+import mvcTamanoTablero.ControladorTamanoTablero;
 import network.Cliente;
 
 public class ControlRegistro {
@@ -23,13 +24,14 @@ public class ControlRegistro {
 
     private void iniciarEventos() {
         vista.getBtnRegistrarse().addActionListener(e -> registrarJugador());
+        vista.setVisible(true);
     }
 
     private void registrarJugador() {
         String nombre = vista.getNombreJugador();
         String rutaAvatar = vista.getRutaAvatarSeleccionado();
         
-        if (nombre.isEmpty()) {
+        if (nombre.isEmpty() || rutaAvatar.isEmpty()) {
             vista.mostrarMensaje("Por favor, ingresa un nombre y selecciona un avatar.");
             return;
         }
@@ -48,6 +50,7 @@ public class ControlRegistro {
 
         vista.mostrarMensaje("\u00a1Jugador registrado exitosamente!");
         vista.dispose();
+        new ControladorTamanoTablero(jugador, blackboard);
         
     }
 }

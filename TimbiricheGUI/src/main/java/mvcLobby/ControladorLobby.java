@@ -10,6 +10,7 @@ import mvcJuego.VistaJuego;
 import java.util.List;
 
 public class ControladorLobby {
+
     private final VistaLobby vista;
     private final ModeloLobby modelo;
     private final Jugador jugador;
@@ -25,6 +26,11 @@ public class ControladorLobby {
         this.esHost = esHost;
         this.tamanoTablero = tamanoTablero;
         this.blackboard = blackboard;
+
+        // Crear controladorJuego desde el inicio con datos mínimos
+        VistaJuego vistaJuego = new VistaJuego(tamanoTablero, List.of(jugador)); // o vacío, según convenga
+        ModeloJuego modeloJuego = new ModeloJuego(List.of(jugador), tamanoTablero);
+        controladorJuego = new ControladorJuego(vistaJuego, modeloJuego, blackboard);
 
         iniciarLobby();
     }
@@ -62,4 +68,4 @@ public class ControladorLobby {
     public ControladorJuego getControladorJuego() {
         return controladorJuego;
     }
-} 
+}
