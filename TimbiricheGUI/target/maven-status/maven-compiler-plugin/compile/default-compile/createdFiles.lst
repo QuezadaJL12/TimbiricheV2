@@ -1,0 +1,8 @@
+modelo\Tablero.class
+modelo\Cuadro.class
+mvcEditarPerfil\VistaEditarPerfil.class
+mvcEditarPerfil\ModeloEditarPerfil.class
+mvcEditarPerfil\ControladorEditarPerfil.class
+modelo\Jugador.class
+modelo\Linea.class
+mvcEditarPerfil\PerfilEditadoListener.class
