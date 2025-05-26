@@ -1,4 +1,4 @@
-package mvcRegistro;
+    package mvcRegistro;
 
 import blackboard.evento.EventoRegistro;
 import com.mycompany.blackboard.Blackboard;
@@ -28,8 +28,8 @@ public class ControlRegistro {
     private void registrarJugador() {
         String nombre = vista.getNombreJugador();
         String rutaAvatar = vista.getRutaAvatarSeleccionado();
-
-        if (nombre.isEmpty() || rutaAvatar == null) {
+        
+        if (nombre.isEmpty()) {
             vista.mostrarMensaje("Por favor, ingresa un nombre y selecciona un avatar.");
             return;
         }
@@ -48,5 +48,6 @@ public class ControlRegistro {
 
         vista.mostrarMensaje("\u00a1Jugador registrado exitosamente!");
         vista.dispose();
+        
     }
 }

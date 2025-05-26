@@ -32,25 +32,36 @@ public class VistaRegistro extends JFrame {
 
         panelAvatares = new JPanel(new GridLayout(3, 3, 10, 10));
         add(panelAvatares, BorderLayout.SOUTH);
+        panelAvatares.setPreferredSize(new Dimension(300, 200));
 
         btnRegistrarse = new JButton("Registrarse");
         add(btnRegistrarse, BorderLayout.PAGE_END);
 
         lblAvatarSeleccionado = new JLabel("", SwingConstants.CENTER);
         add(lblAvatarSeleccionado, BorderLayout.WEST);
-
         cargarAvatares();
+        panelAvatares.revalidate();
+        panelAvatares.repaint();
+        this.validate();
+        this.repaint();
     }
 
     private void cargarAvatares() {
         String[] nombresAvatares = {"GATO.png", "LEIA.png", "LOBO.png", "PINGUINO.png", "RANA.png", "ROBOCOB.png", "SOLDADO.png"};
-        for (String nombre : nombresAvatares) {
-            ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("Avatares/" + nombre)));
-            ImageIcon escalado = new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-            JButton btnAvatar = new JButton(escalado);
-            btnAvatar.setActionCommand(nombre);
-            btnAvatar.addActionListener(e -> seleccionarAvatar(nombre));
-            panelAvatares.add(btnAvatar);
+    for (String nombre : nombresAvatares) {
+        String ruta = "Avatares/" + nombre;
+        java.net.URL url = getClass().getClassLoader().getResource(ruta);
+        System.out.println("Cargando imagen: " + ruta + " -> " + url);
+        if (url == null) {
+            System.err.println("No se encontró la imagen: " + ruta);
+            continue;
+        }
+        ImageIcon icon = new ImageIcon(url);
+        ImageIcon escalado = new ImageIcon(icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+        JButton btnAvatar = new JButton(escalado);
+        btnAvatar.setActionCommand(nombre);
+        btnAvatar.addActionListener(e -> seleccionarAvatar(nombre));
+        panelAvatares.add(btnAvatar);
         }
     }
 
